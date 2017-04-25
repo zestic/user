@@ -1,0 +1,16 @@
+{
+  "name": "zestic/user",
+  "type": "library",
+  "description": "",
+  "require": {
+    "php": ">=7.1",
+    "ramsey/uuid": "^2.9"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "RecoveryOne\\Matter\\": "src/"
+    }
+  }
+}
