@@ -4,7 +4,7 @@
   "description": "",
   "require": {
     "php": ">=7.1",
-    "ramsey/uuid": "^2.9"
+    "ramsey/uuid": "^3.6.0"
   },
   "require-dev": {
   },
