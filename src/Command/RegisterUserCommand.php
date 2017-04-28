@@ -9,7 +9,7 @@ use Prooph\Common\Messaging\PayloadTrait;
 use Zestic\User\EmailAddress;
 use Zestic\User\UserId;
 
-final class RegisterUser extends Command implements PayloadConstructable
+final class RegisterUserCommand extends Command implements PayloadConstructable
 {
     use PayloadTrait;
 
@@ -17,9 +17,9 @@ final class RegisterUser extends Command implements PayloadConstructable
     {
         return new self(
             [
-                'user_id' => (string)$userId,
-                'name' => (string)$name,
-                'email' => (string)$email
+                'user_id' => (string) $userId,
+                'name'    => (string) $name,
+                'email'   => (string) $email,
             ]
         );
     }

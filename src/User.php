@@ -12,28 +12,16 @@ use Zestic\User\Event\UserWasRegistered;
 
 final class User extends AggregateRoot
 {
-    /**
-     * @var UserId
-     */
+    /** @var UserId */
     private $userId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
 
-    /**
-     * @var EmailAddress
-     */
+    /** @var EmailAddress */
     private $emailAddress;
 
-    /**
-     * @param UserId $userId
-     * @param string $name
-     * @param EmailAddress $emailAddress
-     * @return User
-     */
-    public static function registerWithData(UserId $userId, $name, EmailAddress $emailAddress)
+    public static function registerWithData(UserId $userId, $name, EmailAddress $emailAddress): User
     {
         $self = new self();
 
@@ -44,44 +32,22 @@ final class User extends AggregateRoot
         return $self;
     }
 
-    /**
-     * @return UserId
-     */
-    public function userId()
+    public function userId(): UserId
     {
         return $this->userId;
     }
 
-    /**
-     * @return string
-     */
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return EmailAddress
-     */
-    public function emailAddress()
+    public function emailAddress(): EmailAddress
     {
         return $this->emailAddress;
     }
 
-    /**
-     * @param string $text
-     * @param TodoId $todoId
-     * @return Todo
-     */
-    public function postTodo($text, TodoId $todoId)
-    {
-        return Todo::post($text, $this->userId(), $todoId);
-    }
-
-    /**
-     * @return string representation of the unique identifier of the aggregate root
-     */
-    protected function aggregateId()
+    protected function aggregateId(): string
     {
         return $this->userId->toString();
     }
@@ -115,6 +81,8 @@ final class User extends AggregateRoot
      */
     protected function apply(AggregateChanged $event): void
     {
-        // TODO: Implement apply() method.
+        $method = 'when' . substr(strrchr(get_class($event), '\\'), 1);
+
+        $this->$method($event);
     }
 }

@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Zestic\User\Handler;
 
-use Zestic\User\Command\RegisterUser;
+use Zestic\User\Command\RegisterUserCommand;
+use Zestic\User\Repository\EventStore\UserCollection;
 use Zestic\User\User;
-use Zestic\User\UserCollection;
 
 final class RegisterUserHandler
 {
@@ -23,9 +23,9 @@ final class RegisterUserHandler
     }
 
     /**
-     * @param RegisterUser $command
+     * @param RegisterUserCommand $command
      */
-    public function __invoke(RegisterUser $command)
+    public function __invoke(RegisterUserCommand $command)
     {
         $user = User::registerWithData($command->userId(), $command->name(), $command->emailAddress());
 
