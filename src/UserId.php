@@ -13,34 +13,26 @@ final class UserId
      */
     private $uuid;
 
-    /**
-     * @return UserId
-     */
     public static function generate(): UserId
     {
         return new self(Uuid::uuid4());
     }
 
-    /**
-     * @param $userId
-     * @return UserId
-     */
-    public static function fromString($userId): UserId
+    public static function fromString(string $userId): UserId
     {
         return new self(Uuid::fromString($userId));
     }
 
-    /**
-     * @param Uuid $uuid
-     */
     private function __construct(UuidInterface $uuid)
     {
         $this->uuid = $uuid;
     }
 
-    /**
-     * @return string
-     */
+    public function getBytes(): string
+    {
+        return $this->uuid->getBytes();
+    }
+
     public function toString(): string
     {
         return $this->uuid->toString();

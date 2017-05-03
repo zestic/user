@@ -7,12 +7,23 @@ use Zestic\User\Event\UserWasRegistered;
 
 class UserRegisteredProjector
 {
-    public function __invoke($state, UserWasRegistered $event)
+    public static function project($readModel, $state, UserWasRegistered $event)
     {
-        $this->readModel()->stack('insert', [
-            'id' => $event->userId()->toString(),
-            'name' => $event->name()->toString(),
-            'email' => $event->emailAddress()->toString(),
-        ]);
+        $readModel->stack(
+            'insert',
+            [
+                'credentials_expired' => (int) $event->isCredentialsExpired(),
+                'email'               => $event->emailAddress()->toString(),
+                'email_canonical'     => $event->emailAddress()->canonicalized(),
+                'enabled'             => (int) $event->isEnabled(),
+                'expired'             => (int) $event->isExpired(),
+                'id'                  => $event->userId()->getBytes(),
+                'locked'              => (int) $event->isLocked(),
+                'password'            => $event->password(),
+                'roles'               => json_encode($event->roles()),
+                'username'            => $event->username()->toString(),
+                'username_canonical'  => $event->username()->canonicalized(),
+            ]
+        );
     }
 }

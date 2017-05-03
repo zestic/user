@@ -12,24 +12,35 @@ use Zestic\User\Event\UserWasRegistered;
 
 final class User extends AggregateRoot
 {
-    /** @var UserId */
-    private $userId;
-
-    /** @var string */
-    private $name;
-
     /** @var EmailAddress */
     private $emailAddress;
 
-    public static function registerWithData(UserId $userId, $name, EmailAddress $emailAddress): User
+    /** @var Password */
+    private $password;
+
+    /** @var UserId */
+    private $userId;
+
+    /** @var Username */
+    private $username;
+
+    public static function registerWithData(UserId $userId, EmailAddress $emailAddress, $password, Username $username): User
     {
         $self = new self();
 
-        $self->assertName($name);
-
-        $self->recordThat(UserWasRegistered::withData($userId, $name, $emailAddress));
+        $self->recordThat(UserWasRegistered::withData($userId, $emailAddress, $password, $username));
 
         return $self;
+    }
+
+    public function emailAddress(): EmailAddress
+    {
+        return $this->emailAddress;
+    }
+
+    public function password(): Password
+    {
+        return $this->password;
     }
 
     public function userId(): UserId
@@ -37,14 +48,9 @@ final class User extends AggregateRoot
         return $this->userId;
     }
 
-    public function name(): string
+    public function username(): Username
     {
-        return $this->name;
-    }
-
-    public function emailAddress(): EmailAddress
-    {
-        return $this->emailAddress;
+        return $this->username;
     }
 
     protected function aggregateId(): string
@@ -58,7 +64,8 @@ final class User extends AggregateRoot
     protected function whenUserWasRegistered(UserWasRegistered $event)
     {
         $this->userId = $event->userId();
-        $this->name = $event->name();
+        $this->password = $event->password();
+        $this->username = $event->username();
         $this->emailAddress = $event->emailAddress();
     }
 

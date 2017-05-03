@@ -27,7 +27,7 @@ final class RegisterUserHandler
      */
     public function __invoke(RegisterUserCommand $command)
     {
-        $user = User::registerWithData($command->userId(), $command->name(), $command->emailAddress());
+        $user = User::registerWithData($command->userId(), $command->emailAddress(), $command->password(), $command->username());
 
         $this->userCollection->add($user);
     }

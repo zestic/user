@@ -7,19 +7,22 @@ use Prooph\Common\Messaging\Command;
 use Prooph\Common\Messaging\PayloadConstructable;
 use Prooph\Common\Messaging\PayloadTrait;
 use Zestic\User\EmailAddress;
+use Zestic\User\Password;
 use Zestic\User\UserId;
+use Zestic\User\Username;
 
 final class RegisterUserCommand extends Command implements PayloadConstructable
 {
     use PayloadTrait;
 
-    public static function withData($userId, $name, $email)
+    public static function withData($userId, $email, $password, $username)
     {
         return new self(
             [
-                'user_id' => (string) $userId,
-                'name'    => (string) $name,
-                'email'   => (string) $email,
+                'user_id'  => (string)$userId,
+                'email'    => (string)$email,
+                'password' => (string)$password,
+                'username' => (string)$username,
             ]
         );
     }
@@ -29,9 +32,14 @@ final class RegisterUserCommand extends Command implements PayloadConstructable
         return UserId::fromString($this->payload['user_id']);
     }
 
-    public function name()
+    public function password()
     {
-        return $this->payload['name'];
+        return $this->payload['password'];
+    }
+
+    public function username()
+    {
+        return Username::fromString($this->payload['username']);
     }
 
     public function emailAddress()

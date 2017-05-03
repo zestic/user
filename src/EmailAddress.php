@@ -4,26 +4,21 @@ declare(strict_types=1);
 namespace Zestic\User;
 
 use Zestic\User\Exception\InvalidEmailAddress;
+use Zestic\User\Interactor\Canonicalizer;
 
 final class EmailAddress
 {
-    /**
-     * @var string
-     */
+    /** @var string */
+    private $canonical;
+
+    /** @var string */
     private $email;
 
-    /**
-     * @param string $email
-     * @return EmailAddress
-     */
-    public static function fromString(string $email)
+    public static function fromString(string $email): EmailAddress
     {
         return new self($email);
     }
 
-    /**
-     * @param string $emailAddress
-     */
     private function __construct(string $emailAddress)
     {
         if (!filter_var($emailAddress, FILTER_VALIDATE_EMAIL)) {
@@ -31,21 +26,20 @@ final class EmailAddress
         }
 
         $this->email = $emailAddress;
+        $this->canonical = Canonicalizer::canonicalize($emailAddress);
     }
 
-    /**
-     * @return string
-     */
-    public function toString()
+    public function canonicalized(): string
+    {
+        return $this->canonical;
+    }
+
+    public function toString(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param EmailAddress $other
-     * @return bool
-     */
-    public function sameValueAs(EmailAddress $other)
+    public function sameValueAs(EmailAddress $other): bool
     {
         return $this->toString() === $other->toString();
     }

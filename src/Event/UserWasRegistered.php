@@ -6,10 +6,22 @@ namespace Zestic\User\Event;
 use Assert\Assertion;
 use Prooph\EventSourcing\AggregateChanged;
 use Zestic\User\EmailAddress;
+use Zestic\User\Password;
 use Zestic\User\UserId;
+use Zestic\User\Username;
 
 final class UserWasRegistered extends AggregateChanged
 {
+    /**
+     * @var EmailAddress
+     */
+    private $emailAddress;
+
+    /**
+     * @var string
+     */
+    private $password;
+
     /**
      * @var UserId
      */
@@ -20,40 +32,69 @@ final class UserWasRegistered extends AggregateChanged
      */
     private $username;
 
-    /**
-     * @var EmailAddress
-     */
-    private $emailAddress;
-
-    /**
-     * @param UserId $userId
-     * @param string $name
-     * @param EmailAddress $emailAddress
-     * @return UserWasRegistered
-     */
-    public static function withData(UserId $userId, $name, EmailAddress $emailAddress)
+    public static function withData(UserId $userId, EmailAddress $emailAddress, $password, Username $username): UserWasRegistered
     {
-        Assertion::string($name);
-
         $event = self::occur(
             $userId->toString(),
             [
-                'name' => $name,
+                'username' => $username->toString(),
+                'password' => $password,
                 'email' => $emailAddress->toString(),
             ]
         );
 
-        $event->userId = $userId;
-        $event->username = $name;
         $event->emailAddress = $emailAddress;
+        $event->password = $password;
+        $event->username = $username;
+        $event->userId = $userId;
 
         return $event;
     }
 
-    /**
-     * @return UserId
-     */
-    public function userId()
+    public function isCredentialsExpired(): bool
+    {
+        return $this->payload['credentialsExpired'] ?? false;
+    }
+
+    public function emailAddress(): EmailAddress
+    {
+        if ($this->emailAddress === null) {
+            $this->emailAddress = EmailAddress::fromString($this->payload['email']);
+        }
+
+        return $this->emailAddress;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->payload['enabled'] ?? true;
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->payload['expired'] ?? false;
+    }
+
+    public function isLocked(): bool
+    {
+        return $this->payload['locked'] ?? false;
+    }
+
+    public function password(): string
+    {
+        if ($this->password === null) {
+            $this->password = $this->payload['password'];
+        }
+
+        return $this->password;
+    }
+
+    public function roles(): array
+    {
+        return $this->payload['roles'] ?? [];
+    }
+
+    public function userId(): UserId
     {
         if ($this->userId === null) {
             $this->userId = UserId::fromString($this->aggregateId());
@@ -62,25 +103,12 @@ final class UserWasRegistered extends AggregateChanged
         return $this->userId;
     }
 
-    /**
-     * @return string
-     */
-    public function name()
+    public function username(): Username
     {
         if ($this->username === null) {
-            $this->username = $this->payload['name'];
+            $this->username = Username::fromString($this->payload['username']);
         }
-        return $this->username;
-    }
 
-    /**
-     * @return EmailAddress
-     */
-    public function emailAddress()
-    {
-        if ($this->emailAddress === null) {
-            $this->emailAddress = EmailAddress::fromString($this->payload['email']);
-        }
-        return $this->emailAddress;
+        return $this->username;
     }
 }

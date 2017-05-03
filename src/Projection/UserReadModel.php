@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Zestic\User\Projection;
 
-use Doctrine\DBAL\Connection;
+use PDO;
 use Prooph\EventStore\Projection\AbstractReadModel;
 
 final class UserReadModel extends AbstractReadModel
 {
-    const TABLE_NAME = 'user';
+    const TABLE_NAME = 'users';
 
     /**
      * @var Connection
      */
     private $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(PDO $connection)
     {
         $this->connection = $connection;
     }
@@ -33,7 +33,7 @@ CREATE TABLE `$tableName` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email_canonical` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `enabled` tinyint(1) NOT NULL,
-  `salt` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `salt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `last_login` datetime DEFAULT NULL,
   `locked` tinyint(1) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `$tableName` (
   `expires_at` datetime DEFAULT NULL,
   `confirmation_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `password_requested_at` datetime DEFAULT NULL,
-  `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `roles` json,
   `credentials_expired` tinyint(1) NOT NULL,
   `credentials_expire_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -94,6 +94,20 @@ SQL;
 
     protected function insert(array $data): void
     {
-        $this->connection->insert(self::TABLE_NAME, $data);
+        $columnList = [];
+        $paramPlaceholders = [];
+        $paramValues = [];
+
+        foreach ($data as $columnName => $value) {
+            $columnList[] = $columnName;
+            $paramPlaceholders[] = '?';
+            $paramValues[] = $value;
+        }
+
+        $query = 'INSERT INTO ' . self::TABLE_NAME . ' (' . implode(', ', $columnList) . ')' .
+            ' VALUES (' . implode(', ', $paramPlaceholders) . ')';
+
+        $statement = $this->connection->prepare($query);
+        $statement->execute($paramValues);
     }
 }
