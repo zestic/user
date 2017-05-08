@@ -22,7 +22,6 @@ class UserProjector implements ReadModelProjectionInterface
 
     public function project(ReadModelProjector $projector): ReadModelProjector
     {
-
         $readModel = $projector->readModel();
         $projector
             ->fromStream('event_stream')
