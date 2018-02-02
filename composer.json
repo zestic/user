@@ -3,14 +3,25 @@
   "type": "library",
   "description": "",
   "require": {
+    "pac/prooph-package": "dev-master",
     "php": ">=7.1",
-    "ramsey/uuid": "^3.6.0"
+    "youshido/graphql": "dev-master",
+    "codeception/aspect-mock": "dev-master"
   },
   "require-dev": {
+    "codeception/codeception": "^2.3"
   },
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Zestic\\User\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Fixture\\": "tests/_support/Fixture",
+      "Tests\\Functional\\": "tests/functional",
+      "Tests\\Unit\\": "tests/unit"
     }
   }
 }

@@ -1,0 +1,7 @@
+<?php return array (
+  AOP_ROOT_DIR . '/src/GraphQL/Mutation/CreateUserMutation.php' => 
+  array (
+    'filemtime' => 1517539002,
+    'cacheUri' => NULL,
+  ),
+);
