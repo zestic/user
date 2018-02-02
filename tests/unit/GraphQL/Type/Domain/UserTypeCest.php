@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Tests\Unit\GraphQL\Type\Domain;
 
 use UnitTester;
-use Zestic\User\GraphQL\Type\UserType;
+use Zestic\User\GraphQL\Type\Domain\UserType;
 
 class UserTypeCest
 {

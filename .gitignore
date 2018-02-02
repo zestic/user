@@ -3,5 +3,6 @@
 bin/
 composer.phar
 composer.lock
+tests/_support/_cache
 tests/_support/_generated
 vendor/

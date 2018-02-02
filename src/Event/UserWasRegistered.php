@@ -32,12 +32,13 @@ final class UserWasRegistered extends AggregateChanged
      */
     private $username;
 
-    public static function withData(UserId $userId, EmailAddress $emailAddress, $password, Username $username): UserWasRegistered
+    public static function withData(UserId $id, EmailAddress $emailAddress, $password, Username $username): UserWasRegistered
     {
         $event = self::occur(
             $userId->toString(),
             [
-                'username' => $username->toString(),
+                'id' => $id,
+                'identity' => $username->toString(),
                 'password' => $password,
                 'email' => $emailAddress->toString(),
             ]

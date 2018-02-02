@@ -7,7 +7,8 @@ use Zend\Expressive\Authentication\UserInterface;
 
 final class User implements UserInterface
 {
-    private $emailAddress;
+    /** @var string */
+    private $email;
     /** @var string */
     private $identity;
     /** @var string[] */

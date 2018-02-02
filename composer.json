@@ -6,7 +6,8 @@
     "pac/prooph-package": "dev-master",
     "php": ">=7.1",
     "youshido/graphql": "dev-master",
-    "zendframework/zend-expressive-authentication": "dev-release-1.0.0"
+    "zendframework/zend-expressive-authentication": "dev-release-1.0.0",
+    "picr/diaclone": "^1.0@dev"
   },
   "require-dev": {
     "codeception/aspect-mock": "dev-master",

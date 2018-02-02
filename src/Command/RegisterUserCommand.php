@@ -19,10 +19,10 @@ final class RegisterUserCommand extends Command implements PayloadConstructable
     {
         return new self(
             [
-                'user_id'  => (string)$userId,
+                'id'  => (string)$userId,
                 'email'    => (string)$email,
                 'password' => (string)$password,
-                'username' => (string)$username,
+                'identity' => (string)$username,
             ]
         );
     }
