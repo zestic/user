@@ -7,7 +7,7 @@ use Pac\ProophPackage\GraphQL\ProophBridgeField;
 use Youshido\GraphQL\Config\Field\FieldConfig;
 use Youshido\GraphQL\Execution\ResolveInfo;
 
-class CreateUserMutation extends ProophBridgeField
+class RegisterUserMutation extends ProophBridgeField
 {
     public function build(FieldConfig $config)
     {
@@ -15,7 +15,7 @@ class CreateUserMutation extends ProophBridgeField
 
     public function getName()
     {
-        return 'createUser';
+        return 'registerUser';
     }
 
     public function getType()
