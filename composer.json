@@ -6,10 +6,17 @@
     "pac/prooph-package": "dev-master",
     "php": ">=7.1",
     "youshido/graphql": "dev-master",
-    "codeception/aspect-mock": "dev-master"
+    "zendframework/zend-expressive-authentication": "dev-release-1.0.0"
   },
   "require-dev": {
+    "codeception/aspect-mock": "dev-master",
     "codeception/codeception": "^2.3"
+  },
+  "repositories": {
+    "zendframework/zend-expressive-authentication": {
+      "type": "vcs",
+      "url": "https://github.com/zestic/zend-expressive-authentication.git"
+    }
   },
   "minimum-stability": "dev",
   "autoload": {
