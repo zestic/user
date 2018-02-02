@@ -12,19 +12,19 @@ class ZesticUserTransformerCest
     public function testUntransform(UnitTester $I)
     {
         $incoming = [
-            'createdAt' => '2018-01-01 08:00:00',
-            'email' => 'foo@bar.com',
-            'identity' => 'foo',
-            'password' => 'password1',
-            'updatedAt' => '2018-01-01 08:00:00',
+            'createdAt' => '2017-12-01T08:00:00.000Z',
+            'email'     => 'foo@bar.com',
+            'identity'  => 'foo',
+            'password'  => 'password1',
+            'updatedAt' => '2017-12-01T08:00:00.000Z',
         ];
 
         $expected = [
-            'created_at' => '2018-01-01 08:00:00',
-            'email' => 'foo@bar.com',
-            'identity' => 'foo',
-            'password' => 'password1',
-            'updated_at' => '2018-01-01 08:00:00',
+            'created_at' => '2017-12-01 08:00:00',
+            'email'      => 'foo@bar.com',
+            'identity'   => 'foo',
+            'password'   => 'password1',
+            'updated_at' => '2017-12-01 08:00:00',
         ];
 
         $resource = new Item($incoming);
