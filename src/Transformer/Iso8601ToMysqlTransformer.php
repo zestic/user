@@ -20,11 +20,14 @@ class Iso8601ToMysqlTransformer extends AbstractTransformer
         }
 
         try {
-            $carbon = new Carbon($value, new DateTimeZone('UTC'));
-                // replace '+##:##' with '+####'
+            $date = new Carbon($value, new DateTimeZone('UTC'));
+
+            // replace '+##:##' with '+####'
             return preg_replace_callback('/\+[0-9]{2}:[0-9]{2}/', function($matches) {
                 return str_replace(':', '', $matches[0]);
-            }, $carbon->toIso8601String());
+            },
+                $date->toIso8601String()
+            );
 
         } catch (Exception $e) {
             throw new TransformException('Failed to transform ' . $resource->getPropertyName() . ' because Carbon.');
@@ -33,18 +36,13 @@ class Iso8601ToMysqlTransformer extends AbstractTransformer
 
     public function untransform(ResourceInterface $resource)
     {
-        $value = $this->getPropertyValueFromResource($resource);
+        $value = $resource->getData();
         if (empty($value)) {
             return '';
         }
 
         try {
             return (new Carbon($value, new DateTimeZone('UTC')))->toDateTimeString();
-                // replace '+##:##' with '+####'
-            return preg_replace_callback('/\+[0-9]{2}:[0-9]{2}/', function($matches) {
-                return str_replace(':', '', $matches[0]);
-            }, $carbon->toIso8601String());
-
         } catch (Exception $e) {
             throw new TransformException('Failed to transform ' . $resource->getPropertyName() . ' because Carbon.');
         }
