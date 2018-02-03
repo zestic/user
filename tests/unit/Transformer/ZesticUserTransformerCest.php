@@ -9,13 +9,13 @@ use Zestic\User\Transformer\ZesticUserTransformer;
 
 class ZesticUserTransformerCest
 {
-    public function testUntransform(UnitTester $I)
+    public function testUntransformToMysql(UnitTester $I)
     {
         $incoming = [
             'createdAt' => '2017-12-01T08:00:00.000Z',
             'email'     => 'foo@bar.com',
             'identity'  => 'foo',
-            'password'  => 'password1',
+            'password'  => '$argon2i$v=19$m=1024,t=2,p=2$SnE0YW4uejFvRTF2S3FQWQ$KLiHtVHIGAG7DP99/08wjjfTBMB9VqJaQuAm/uuVV8k',
             'updatedAt' => '2017-12-01T08:00:00.000Z',
         ];
 
@@ -23,7 +23,7 @@ class ZesticUserTransformerCest
             'created_at' => '2017-12-01 08:00:00',
             'email'      => 'foo@bar.com',
             'identity'   => 'foo',
-            'password'   => 'password1',
+            'password'   => '$argon2i$v=19$m=1024,t=2,p=2$SnE0YW4uejFvRTF2S3FQWQ$KLiHtVHIGAG7DP99/08wjjfTBMB9VqJaQuAm/uuVV8k',
             'updated_at' => '2017-12-01 08:00:00',
         ];
 

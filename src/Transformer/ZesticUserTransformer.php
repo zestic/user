@@ -16,8 +16,8 @@ class ZesticUserTransformer extends AbstractTransformer
     ];
 
     protected static $transformers = [
-        'createdAt' => Iso8601ToMysqlTransformer::class,
-        'createdAt' => Iso8601ToMysqlTransformer::class,
+        'created_at' => Iso8601ToMysqlTransformer::class,
+        'updated_at' => Iso8601ToMysqlTransformer::class,
     ];
 
 }
