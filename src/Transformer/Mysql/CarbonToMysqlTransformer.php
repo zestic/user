@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Zestic\User\Transformer;
+namespace Zestic\User\Transformer\Mysql;
 
 use Carbon\Carbon;
 use DateTimeZone;
@@ -10,7 +10,7 @@ use Diaclone\Resource\ResourceInterface;
 use Diaclone\Transformer\AbstractTransformer;
 use Exception;
 
-class Iso8601ToMysqlTransformer extends AbstractTransformer
+class CarbonToMysqlTransformer extends AbstractTransformer
 {
     public function transform(ResourceInterface $resource)
     {
@@ -20,15 +20,7 @@ class Iso8601ToMysqlTransformer extends AbstractTransformer
         }
 
         try {
-            $date = new Carbon($value, new DateTimeZone('UTC'));
-
-            // replace '+##:##' with '+####'
-            return preg_replace_callback('/\+[0-9]{2}:[0-9]{2}/', function($matches) {
-                return str_replace(':', '', $matches[0]);
-            },
-                $date->toIso8601String()
-            );
-
+            return (new Carbon($value, new DateTimeZone('UTC')))->toDateTimeString();
         } catch (Exception $e) {
             throw new TransformException('Failed to transform ' . $resource->getPropertyName() . ' because Carbon.');
         }
@@ -38,13 +30,14 @@ class Iso8601ToMysqlTransformer extends AbstractTransformer
     {
         $value = $resource->getData();
         if (empty($value)) {
-            return '';
+            return null;
         }
 
         try {
-            return (new Carbon($value, new DateTimeZone('UTC')))->toDateTimeString();
+            return new Carbon($value, new DateTimeZone('UTC'));
         } catch (Exception $e) {
             throw new TransformException('Failed to transform ' . $resource->getPropertyName() . ' because Carbon.');
         }
+
     }
 }

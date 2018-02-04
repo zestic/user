@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Zestic\User;
+namespace Zestic\User\Entity;
 
 final class Password
 {
@@ -15,7 +15,7 @@ final class Password
 
     private function __construct(string $password)
     {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = password_hash($password, PASSWORD_ARGON2I);
     }
 
     public function toString(): string
