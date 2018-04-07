@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Zestic\User;
+namespace Zestic\User\Model;
 
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-final class UserId
+final class UserId implements ValueObject
 {
     /**
      * @var UuidInterface
@@ -28,22 +28,13 @@ final class UserId
         $this->uuid = $uuid;
     }
 
-    public function getBytes(): string
-    {
-        return $this->uuid->getBytes();
-    }
-
     public function toString(): string
     {
         return $this->uuid->toString();
     }
 
-    /**
-     * @param UserId $other
-     * @return bool
-     */
-    public function sameValueAs(UserId $other): bool
+    public function sameValueAs(ValueObject $other): bool
     {
-        return $this->toString() === $other->toString();
+        return get_class($this) === get_class($other) && $this->uuid->equals($other->uuid);
     }
 }
