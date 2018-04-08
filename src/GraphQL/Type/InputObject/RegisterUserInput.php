@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Zestic\User\GraphQL\Type\Domain;
+namespace Zestic\User\GraphQL\Type\InputObject;
 
 use Youshido\GraphQL\Config\Object\ObjectTypeConfig;
-use Youshido\GraphQL\Type\Object\AbstractObjectType;
+use Youshido\GraphQL\Type\InputObject\AbstractInputObjectType;
 use Youshido\GraphQL\Type\Scalar\StringType;
 
-class UserType extends AbstractObjectType
+class RegisterUserInput extends AbstractInputObjectType
 {
     /**
      * @param ObjectTypeConfig $config
@@ -18,7 +18,7 @@ class UserType extends AbstractObjectType
             ->addFields(
                 [
                     'email'    => new StringType(),
-                    'id'       => new UuidType(),
+                    'id'       => new StringType(),
                     'password' => new StringType(),
                     'username' => new StringType(),
                 ]
@@ -27,6 +27,6 @@ class UserType extends AbstractObjectType
 
     public function getName()
     {
-        return 'User';
+        return 'RegisterUserInput';
     }
 }

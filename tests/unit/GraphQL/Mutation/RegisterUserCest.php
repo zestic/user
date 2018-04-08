@@ -6,18 +6,18 @@ namespace Tests\Unit\GraphQL\Mutation;
 use AspectMock\Test as Mock;
 use Pac\ProophPackage\GraphQL\GraphQLMessageFactory;
 use UnitTester;
-use Zestic\User\GraphQL\Mutation\RegisterUserMutation;
+use Zestic\User\GraphQL\Mutation\RegisterUser;
 
 class RegisterUserCest
 {
-    /** @var RegisterUserMutation */
+    /** @var RegisterUser */
     protected $mutation;
 
     public function _before(UnitTester $I)
     {
         $mock = Mock::double(GraphQLMessageFactory::class, []);
         $factory = $mock->make();
-        $this->mutation = new RegisterUserMutation($factory);
+        $this->mutation = new RegisterUser($factory);
     }
 
     public function testGetName(UnitTester $I)
