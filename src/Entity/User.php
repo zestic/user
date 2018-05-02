@@ -16,6 +16,8 @@ final class User implements UserInterface
     private $identity;
     /** @var Password */
     private $password;
+    /** @var PersonInterface */
+    private $person;
     /** @var Carbon */
     private $updatedAt;
     /** @var string[] */

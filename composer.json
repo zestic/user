@@ -5,7 +5,7 @@
   "require": {
     "nesbot/carbon": "^1.23@dev",
     "php": ">=7.2",
-    "picr/diaclone": "^1.0@dev",
+    "picr/diaclone": "dev-compli",
     "prooph/common": "^4.2.1",
     "prooph/event-sourcing": "^5.3",
     "prooph/event-store": "^7.3.1",
@@ -15,7 +15,9 @@
     "prooph/event-store-http-middleware": "^0.2",
     "prooph/service-bus": "^6.2",
     "youshido/graphql": "^1.5",
-    "zendframework/zend-expressive-authentication": "dev-release-1.0.0"
+    "zendframework/zend-expressive-authentication": "dev-release-1.0.0",
+    "zestic/common": "*",
+    "symfony/event-dispatcher": "^4.1@dev"
   },
   "require-dev": {
     "codeception/aspect-mock": "dev-master",
@@ -26,6 +28,10 @@
     "zendframework/zend-expressive-authentication": {
       "type": "vcs",
       "url": "https://github.com/zestic/zend-expressive-authentication.git"
+    },
+    "zestic/common": {
+      "type": "vcs",
+      "url": "git@github.com:zestic/common.git"
     }
   },
   "minimum-stability": "dev",
