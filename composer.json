@@ -14,10 +14,10 @@
     "prooph/http-middleware": "^0.1",
     "prooph/event-store-http-middleware": "^0.2",
     "prooph/service-bus": "^6.2",
-    "youshido/graphql": "^1.5",
-    "zendframework/zend-expressive-authentication": "dev-release-1.0.0",
-    "zestic/common": "*",
-    "symfony/event-dispatcher": "^4.1@dev"
+    "symfony/event-dispatcher": "^4.1@dev",
+    "youshido/graphql": "*",
+    "zendframework/zend-expressive-authentication": "^1.0.0alpha4",
+    "zestic/common": "*"
   },
   "require-dev": {
     "codeception/aspect-mock": "dev-master",
@@ -25,6 +25,10 @@
     "proophsoftware/prooph-cli": "^0.2.0"
   },
   "repositories": {
+    "picr/diaclone": {
+      "type": "vcs",
+      "url": "git@github.com:RecoveryOneOscar/diaclone.git"
+    },
     "zendframework/zend-expressive-authentication": {
       "type": "vcs",
       "url": "https://github.com/zestic/zend-expressive-authentication.git"
