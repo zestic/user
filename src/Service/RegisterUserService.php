@@ -6,11 +6,12 @@ namespace Zestic\User\Service;
 use Common\Communique\Communique;
 use Common\Communique\CommuniqueEvent;
 use Common\Communique\Reply;
+use Common\Communique\ServiceHandlerInterface;
 use Prooph\ServiceBus\CommandBus;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zestic\User\Model\Command\RegisterUser;
 
-class RegisterUserService
+class RegisterUserService implements ServiceHandlerInterface
 {
     /** @var CommandBus */
     private $commandBus;
@@ -34,8 +35,8 @@ class RegisterUserService
         if ($event->isPropagationStopped()) {
             return $this->createErrorResponseFromEvent($event);
         }
-        $command = RegisterUser::fromCommuique($communique);
-        $reply = $this->commandBus->dispatch($communique);
+        $command = RegisterUser::fromCommunique($communique);
+        $reply = $this->commandBus->dispatch($command);
 
         $this->eventDispatcher->dispatch(UserEvent::POST_PROCESSING_REGISTER_USER, $event);
         return $reply;

@@ -14,6 +14,6 @@ class RegisterUserServiceFactory
         $commandBus = $container->get(CommandBus::class);
         $eventDispatcher = $container->get('eventDispatcher');
 
-        new RegisterUserService($commandBus, $eventDispatcher);
+        return new RegisterUserService($commandBus, $eventDispatcher);
     }
 }
