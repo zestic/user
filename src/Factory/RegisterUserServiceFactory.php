@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Zestic\User\Factory;
 
-use Prooph\ServiceBus\CommandBus;
 use Psr\Container\ContainerInterface;
 use Zestic\User\Service\RegisterUserService;
 

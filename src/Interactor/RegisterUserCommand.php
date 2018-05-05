@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Zestic\User\Interactor;
 
 use Common\Communique\CommunicationEvent;
+use Prooph\ServiceBus\CommandBus;
 use Zestic\User\Model\Command\RegisterUser;
 
 final class RegisterUserCommand
@@ -16,7 +17,7 @@ final class RegisterUserCommand
         $this->commandBus = $commandBus;
     }
 
-    public function handle(CommunicationEvent $event)
+    public function __invoke(CommunicationEvent $event)
     {
         $communique = $event->getCommunique();
         $command = RegisterUser::fromCommunique($communique);
