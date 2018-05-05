@@ -11,9 +11,8 @@ class RegisterUserServiceFactory
 {
     public function __invoke(ContainerInterface $container): RegisterUserService
     {
-        $commandBus = $container->get(CommandBus::class);
         $eventDispatcher = $container->get('eventDispatcher');
 
-        return new RegisterUserService($commandBus, $eventDispatcher);
+        return new RegisterUserService($eventDispatcher);
     }
 }

@@ -14,11 +14,11 @@ final class EmailAddress implements ValueObject
 
     public static function fromString(string $email): EmailAddress
     {
-        $validator = new EmailAddressValidator();
-
-        if (! $validator->isValid($email)) {
-            throw new \InvalidArgumentException('Invalid email address');
-        }
+//        $validator = new EmailAddressValidator();
+//
+//        if (! $validator->isValid($email)) {
+//            throw new \InvalidArgumentException('Invalid email address');
+//        }
 
         return new self($email);
     }

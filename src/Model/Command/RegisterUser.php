@@ -14,23 +14,14 @@ final class RegisterUser extends Command implements CommuniqueConstructableInter
 {
     use CommuniqueConstructableTrait;
 
-    public static function withData(string $userId, string $name, string $email): RegisterUser
-    {
-        return new self([
-            'user_id' => $userId,
-            'name' => $name,
-            'email' => $email,
-        ]);
-    }
-
     public function userId(): UserId
     {
-        return UserId::fromString($this->payload['user_id']);
+        return UserId::fromString($this->payload['id']);
     }
 
     public function name(): UserName
     {
-        return UserName::fromString($this->payload['name']);
+        return UserName::fromString($this->payload['username']);
     }
 
     public function emailAddress(): EmailAddress

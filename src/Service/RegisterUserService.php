@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Zestic\User\Service;
 
+use Common\Communique\CommunicationEvent;
 use Common\Communique\Communique;
 use Common\Communique\CommuniqueEvent;
 use Common\Communique\Reply;
@@ -13,36 +14,32 @@ use Zestic\User\Model\Command\RegisterUser;
 
 class RegisterUserService implements ServiceHandlerInterface
 {
-    /** @var CommandBus */
-    private $commandBus;
     /** @var EventDispatcher */
     private $eventDispatcher;
 
-    public function __construct(CommandBus $commandBus, EventDispatcher $eventDispatcher)
+    public function __construct(EventDispatcher $eventDispatcher)
     {
-        $this->commandBus = $commandBus;
         $this->eventDispatcher = $eventDispatcher;
     }
 
     public function handle(Communique $communique): Reply
     {
-        $event = new CommuniqueEvent($communique);
-        $this->eventDispatcher->dispatch(UserEvent::PRE_PROCESSING_REGISTER_USER, $event);
-        if ($event->isPropagationStopped()) {
-            return $this->createErrorResponseFromEvent($event);
-        }
-        $this->eventDispatcher->dispatch(UserEvent::PROCESS_REGISTER_USER, $event);
-        if ($event->isPropagationStopped()) {
-            return $this->createErrorResponseFromEvent($event);
-        }
-        $command = RegisterUser::fromCommunique($communique);
-        $reply = $this->commandBus->dispatch($command);
+        $event = new CommunicationEvent($communique);
 
-        $this->eventDispatcher->dispatch(UserEvent::POST_PROCESSING_REGISTER_USER, $event);
-        return $reply;
-    }
+        $this->eventDispatcher->dispatch(__CLASS__ . '.pre', $event);
+        if ($event->isPropagationStopped()) {
+            return $event->getErrorReply();
+        }
+        $this->eventDispatcher->dispatch(__CLASS__ . '.process', $event);
+        if ($event->isPropagationStopped()) {
+            return $event->getErrorReply();
+        }
 
-    private function createErrorResponseFromEvent(CommuniqueEvent $event): Reply
-    {
+        $this->eventDispatcher->dispatch(__CLASS__ . '.post', $event);
+        if ($event->isPropagationStopped()) {
+            return $event->getErrorReply();
+        }
+
+        return $event->getReply();
     }
 }

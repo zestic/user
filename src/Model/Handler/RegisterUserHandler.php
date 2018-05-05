@@ -13,9 +13,7 @@ use Zestic\User\Model\UserCollection;
 
 class RegisterUserHandler
 {
-    /**
-     * @var UserCollection
-     */
+    /** @var UserCollection */
     private $userCollection;
 
     /**
@@ -24,27 +22,28 @@ class RegisterUserHandler
     private $checksUniqueUsersEmailAddress;
 
     public function __construct(
-        UserCollection $userCollection,
-        ChecksUniqueUsersEmailAddress $checksUniqueUsersEmailAddress
+        UserCollection $userCollection
     ) {
         $this->userCollection = $userCollection;
-        $this->checksUniqueUsersEmailAddress = $checksUniqueUsersEmailAddress;
+//        $this->checksUniqueUsersEmailAddress = $checksUniqueUsersEmailAddress;
     }
 
     public function __invoke(RegisterUser $command): void
     {
-        if ($userId = ($this->checksUniqueUsersEmailAddress)($command->emailAddress())) {
-            if (! $user = $this->userCollection->get($userId)) {
-                throw UserNotFound::withUserId($userId);
-            }
-
-            $user->registerAgain($command->name());
-        } else {
-            if ($user = $this->userCollection->get($command->userId())) {
-                throw UserAlreadyExists::withUserId($command->userId());
-            }
-            $user = User::registerWithData($command->userId(), $command->name(), $command->emailAddress());
-        }
+//        if ($userId = ($this->checksUniqueUsersEmailAddress)($command->emailAddress())) {
+//            if (! $user = $this->userCollection->get($userId)) {
+//                throw UserNotFound::withUserId($userId);
+//            }
+//
+//            $user->registerAgain($command->name());
+//        } else {
+//            if ($user = $this->userCollection->get($command->userId())) {
+//                throw UserAlreadyExists::withUserId($command->userId());
+//            }
+//            $user = User::registerWithData($command->userId(), $command->name(), $command->emailAddress());
+//        }
+        $user = User::registerWithData($command->userId(), $command->name(), $command->emailAddress());
+      //  $user = User::registerFromCommand($command);
 
         $this->userCollection->save($user);
     }
