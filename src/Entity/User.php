@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Zestic\User\Entity;
 
 use Carbon\Carbon;
+use Ramsey\Uuid\Uuid;
 use Zend\Expressive\Authentication\UserInterface;
 
 final class User implements UserInterface
@@ -14,9 +15,11 @@ final class User implements UserInterface
     private $email;
     /** @var string */
     private $identity;
+    /** @var Uuid */
+    private $id;
     /** @var Password */
     private $password;
-    /** @var PersonInterface */
+    /** @var Person */
     private $person;
     /** @var Carbon */
     private $updatedAt;
@@ -47,6 +50,18 @@ final class User implements UserInterface
         return $this;
     }
 
+    public function getId(): Uuid
+    {
+        return $this->id;
+    }
+
+    public function setId(Uuid $id): User
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getIdentity(): string
     {
         return $this->identity;
@@ -67,6 +82,18 @@ final class User implements UserInterface
     public function setPassword(Password $password): User
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getPerson(): Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(Person $person): User
+    {
+        $this->person = $person;
 
         return $this;
     }

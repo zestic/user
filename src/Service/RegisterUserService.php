@@ -26,6 +26,7 @@ class RegisterUserService implements ServiceHandlerInterface
     {
         $event = new CommunicationEvent($communique);
 
+        $this->proophEventBus->
         $this->eventDispatcher->dispatch(__CLASS__ . '.pre', $event);
         if ($event->isPropagationStopped()) {
             return $event->getErrorReply();
