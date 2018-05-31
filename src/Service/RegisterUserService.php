@@ -10,9 +10,8 @@ use Common\Communique\Reply;
 use Common\Communique\ServiceHandlerInterface;
 use Prooph\ServiceBus\CommandBus;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Zestic\User\Model\Command\RegisterUser;
 
-class RegisterUserService implements ServiceHandlerInterface
+class MutationService implements ServiceHandlerInterface
 {
     /** @var EventDispatcher */
     private $eventDispatcher;
@@ -26,7 +25,7 @@ class RegisterUserService implements ServiceHandlerInterface
     {
         $event = new CommunicationEvent($communique);
 
-        $this->proophEventBus->
+      //  $this->proophEventBus->
         $this->eventDispatcher->dispatch(__CLASS__ . '.pre', $event);
         if ($event->isPropagationStopped()) {
             return $event->getErrorReply();
